@@ -6,7 +6,7 @@ A script to enable [Travis CI](http://travis-ci.org/) integration for
 setup a `.travis.yml` config as such:
 
 ```yaml
-language: erlang
+language: node_js
 script:
  - curl https://raw.github.com/nshah/go.travis/master/install | sh
 ```
