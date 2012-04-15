@@ -1,4 +1,4 @@
-go.travis
+go.travis [![Build Status](https://secure.travis-ci.org/nshah/go.travis.png)](http://travis-ci.org/nshah/go.travis)
 =========
 
 A script to enable [Travis CI](http://travis-ci.org/) integration for
@@ -14,7 +14,7 @@ script:
 And you're all set.
 
 Example config:
-https://github.com/nshah/go.freeport/blob/master/.travis.yml
+https://github.com/nshah/go.travis/blob/master/.travis.yml
 
 Example run:
-http://travis-ci.org/#!/nshah/go.freeport/builds/1093516
+http://travis-ci.org/#!/nshah/go.travis/builds/1093516
