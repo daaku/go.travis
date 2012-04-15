@@ -38,4 +38,6 @@ mkdir -p $gopath_user || true
 mkdir -p $GOPATH/bin || true
 mkdir -p $GOPATH/pkg || true
 mv $repo_dir $gopath_repo
-go test github.com/$gihub_user/$gihub_repo/... -v
+
+go get -v github.com/$gihub_user/$gihub_repo/...
+go test -v github.com/$gihub_user/$gihub_repo/...
