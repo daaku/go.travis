@@ -33,11 +33,13 @@ rm $OUT
 echo " done."
 
 set -e
+set +x
 cd $HOME
 mkdir -p $gopath_user || true
 mkdir -p $GOPATH/bin || true
 mkdir -p $GOPATH/pkg || true
 mv $repo_dir $gopath_repo
 
-go get -v github.com/$gihub_user/$gihub_repo/...
-go test -v github.com/$gihub_user/$gihub_repo/...
+go get -v -u github.com/$github_user/$github_repo/...
+go get -v -u $(go list -f '{{.TestImports}}' github.com/$github_user/$github_repo/... | sed -e 's/^\[//' | sed -e 's/\]$//')
+go test -v github.com/$github_user/$github_repo/...
