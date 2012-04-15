@@ -2,7 +2,7 @@ go.travis
 =========
 
 A script to enable [Travis CI](http://travis-ci.org/) integration for
-[Go](http://golang.org/) projects. Once you project has some tests,
+[Go](http://golang.org/) projects. Once your project has some tests,
 setup a `.travis.yml` config as such:
 
 ```yaml
