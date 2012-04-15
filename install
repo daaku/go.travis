@@ -1,18 +1,38 @@
 #!/bin/bash
 # Sets up a go installation for the Travis CI environment.
 
-set -e
-
 export GOPATH=$HOME
 export PATH=$PATH:$HOME/go/bin:$GOPATH/bin
+export go_release=go1
 export repo_dir=$PWD
 export github_repo=$(basename $PWD)
 export github_user=$(basename $(cd .. && pwd))
 export gopath_user=$GOPATH/src/github.com/$github_user
 export gopath_repo=$gopath_user/$github_repo
 
-hg clone -r go1 https://code.google.com/p/go $HOME/go
-cd $HOME/go/src && ./make.bash
+echo -n Fetching go sources...
+OUT=/tmp/go.fetch.$PPID
+hg clone -r $go_release https://code.google.com/p/go $HOME/go 1>$OUT 2>&1
+if [ $? -ne 0 ]; then
+  echo FAILED
+  cat $OUT
+  exit 1
+fi
+rm $OUT
+echo " done."
+
+echo -n Compiling go...
+OUT=/tmp/go.compile.$PPID
+cd $HOME/go/src && ./make.bash 1>$OUT 2>&1
+if [ $? -ne 0 ]; then
+  echo FAILED
+  cat $OUT
+  exit 1
+fi
+rm $OUT
+echo " done."
+
+set -e
 cd $HOME
 mkdir -p $gopath_user || true
 mkdir -p $GOPATH/bin || true
