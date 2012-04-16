@@ -17,4 +17,4 @@ Example config:
 https://github.com/nshah/go.travis/blob/master/.travis.yml
 
 Example run:
-http://travis-ci.org/#!/nshah/go.travis/builds/1093516
+http://travis-ci.org/#!/nshah/go.travis
