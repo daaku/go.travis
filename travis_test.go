@@ -1,7 +1,7 @@
 package travis
 
 import (
-	_ "github.com/nshah/go.subset" // to check that imports are handled
+	_ "github.com/daaku/go.subset" // to check that imports are handled
 	"testing"
 )
 

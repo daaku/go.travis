@@ -1,7 +1,7 @@
 package sub
 
 import (
-	_ "github.com/nshah/go.freeport" // to check that imports are handled
+	_ "github.com/daaku/go.freeport" // to check that imports are handled
 	"testing"
 )
 

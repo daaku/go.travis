@@ -1,7 +1,7 @@
 package travis_test
 
 import (
-	_ "github.com/nshah/go.flagconfig" // to check that imports are handled
+	_ "github.com/daaku/go.flagconfig" // to check that imports are handled
 	"testing"
 )
 
