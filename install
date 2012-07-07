@@ -20,7 +20,7 @@ echo Fetching packaage dependicies
 go get -v github.com/$GITHUB_USER/$GITHUB_REPO/...
 echo Fetching test dependicies
 TEST_DEPS=$(go list -f '{{.TestImports}}' github.com/$GITHUB_USER/$GITHUB_REPO/... | sed -e 's/^\[//' | sed -e 's/\]$//')
-if [ $TEST_DEPS ]; then
+if [ "$TEST_DEPS" ]; then
   go get -v $TEST_DEPS
 fi
 go test -v github.com/$GITHUB_USER/$GITHUB_REPO/...
