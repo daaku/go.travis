@@ -13,7 +13,7 @@ export PATH=$PATH:$LOCAL_GO/bin
 sudo mkdir $LOCAL_GO
 sudo chown $RUNNING_USER $LOCAL_GO
 echo Installing Go
-curl $RELEASE_URL | tar -C /usr/local -xzf -
+curl --silent $RELEASE_URL | tar -C /usr/local -xzf -
 mkdir -p $LOCAL_GO/src/pkg/github.com/$GITHUB_USER
 cp -r $REPO_DIR $LOCAL_GO/src/pkg/github.com/$GITHUB_USER/$GITHUB_REPO
 echo Fetching packaage dependicies
