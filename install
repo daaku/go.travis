@@ -1,45 +1,26 @@
 #!/bin/bash
-# Sets up a go installation for the Travis CI environment.
-
-export GOPATH=$HOME
-export PATH=$PATH:$HOME/go/bin:$GOPATH/bin
-export go_release=go1
-export repo_dir=$PWD
-export github_repo=$(basename $PWD)
-export github_user=$(basename $(cd .. && pwd))
-export gopath_user=$GOPATH/src/github.com/$github_user
-export gopath_repo=$gopath_user/$github_repo
-
-echo -n Fetching go sources...
-OUT=/tmp/go.fetch.$PPID
-hg clone -r $go_release https://code.google.com/p/go $HOME/go 1>$OUT 2>&1
-if [ $? -ne 0 ]; then
-  echo FAILED
-  cat $OUT
-  exit 1
-fi
-rm $OUT
-echo " done."
-
-echo -n Compiling go...
-OUT=/tmp/go.compile.$PPID
-cd $HOME/go/src && ./make.bash 1>$OUT 2>&1
-if [ $? -ne 0 ]; then
-  echo FAILED
-  cat $OUT
-  exit 1
-fi
-rm $OUT
-echo " done."
 
 set -e
-set +x
-cd $HOME
-mkdir -p $gopath_user || true
-mkdir -p $GOPATH/bin || true
-mkdir -p $GOPATH/pkg || true
-mv $repo_dir $gopath_repo
+REPO_DIR=$PWD
+GITHUB_REPO=$(basename $PWD)
+GITHUB_USER=$(basename $(cd .. && pwd))
+RELEASE_URL=http://go.googlecode.com/files/go1.0.2.linux-386.tar.gz
+LOCAL_GO=/usr/local/go
+RUNNING_USER=$USER
 
-go get -v github.com/$github_user/$github_repo/...
-go get -v $(go list -f '{{.TestImports}}' github.com/$github_user/$github_repo/... | sed -e 's/^\[//' | sed -e 's/\]$//')
-go test -v github.com/$github_user/$github_repo/...
+export PATH=$PATH:$LOCAL_GO/bin
+
+sudo mkdir $LOCAL_GO
+sudo chown $RUNNING_USER $LOCAL_GO
+echo Installing Go
+curl $RELEASE_URL | tar -C /usr/local -xzf -
+mkdir -p $LOCAL_GO/src/pkg/github.com/$GITHUB_USER
+cp -r $REPO_DIR $LOCAL_GO/src/pkg/github.com/$GITHUB_USER/$GITHUB_REPO
+echo Fetching packaage dependicies
+go get -v github.com/$GITHUB_USER/$GITHUB_REPO/...
+echo Fetching test dependicies
+TEST_DEPS=$(go list -f '{{.TestImports}}' github.com/$GITHUB_USER/$GITHUB_REPO/... | sed -e 's/^\[//' | sed -e 's/\]$//')
+if [ $TEST_DEPS ]; then
+  go get -v $TEST_DEPS
+fi
+go test -v github.com/$GITHUB_USER/$GITHUB_REPO/...
