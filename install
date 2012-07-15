@@ -8,7 +8,7 @@ RELEASE_URL=http://go.googlecode.com/files/go1.0.2.linux-386.tar.gz
 LOCAL_GO=/usr/local/go
 RUNNING_USER=$USER
 
-export PATH=$PATH:$LOCAL_GO/bin
+export PATH=$LOCAL_GO/bin:$PATH
 
 sudo mkdir $LOCAL_GO
 sudo chown $RUNNING_USER $LOCAL_GO
