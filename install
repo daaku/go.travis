@@ -4,19 +4,11 @@ set -e
 REPO_DIR=$PWD
 GITHUB_REPO=$(basename $PWD)
 GITHUB_USER=$(basename $(cd .. && pwd))
-RELEASE_URL=http://go.googlecode.com/files/go1.0.2.linux-386.tar.gz
-LOCAL_GO=/usr/local/go
-RUNNING_USER=$USER
+export GOPATH=/tmp/$GITHUB_USER/$GITHUB_REPO.$PPID
 
-export PATH=$LOCAL_GO/bin:$PATH
-
-sudo mkdir $LOCAL_GO
-sudo chown $RUNNING_USER $LOCAL_GO
-echo Installing Go
-curl --silent $RELEASE_URL | tar -C /usr/local -xzf -
-mkdir -p $LOCAL_GO/src/pkg/github.com/$GITHUB_USER
-cp -r $REPO_DIR $LOCAL_GO/src/pkg/github.com/$GITHUB_USER/$GITHUB_REPO
-echo Fetching packaage dependicies
+mkdir -p $GOPATH/src/github.com/$GITHUB_USER
+cp -r $REPO_DIR $GOPATH/src/github.com/$GITHUB_USER/$GITHUB_REPO
+echo Fetching package dependicies
 go get -v github.com/$GITHUB_USER/$GITHUB_REPO/...
 echo Fetching test dependicies
 TEST_DEPS=$(go list -f '{{.TestImports}} {{.XTestImports}}' github.com/$GITHUB_USER/$GITHUB_REPO/... | sed -e 's/\[//g' | sed -e 's/\]//g')
