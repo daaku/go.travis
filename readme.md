@@ -7,6 +7,8 @@ setup a `.travis.yml` config as such:
 
 ```yaml
 language: node_js
+go:
+  - 1.1
 script:
  - curl https://raw.github.com/daaku/go.travis/master/install | sh
 ```
