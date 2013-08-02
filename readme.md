@@ -19,4 +19,4 @@ Example config:
 https://github.com/daaku/go.travis/blob/master/.travis.yml
 
 Example run:
-http://travis-ci.org/#!/daaku/go.travis
+https://travis-ci.org/daaku/go.travis
